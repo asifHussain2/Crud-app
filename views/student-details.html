@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Student Details</title>
+</head>
+<body>
+  <h2>Student Details</h2>
+  <div id="student-details">
+    <!-- Details will be displayed here -->
+  </div>
+
+  <script>
+    // Function to fetch student details
+    const fetchStudentDetails = async () => {
+      try {
+        const response = await fetch('/student/current'); // Endpoint to fetch current logged-in student details
+        if (!response.ok) {
+          throw new Error('Failed to fetch student details');
+        }
+        const student = await response.json();
+
+        const detailsContainer = document.getElementById('student-details');
+        detailsContainer.innerHTML = `
+          <p><strong>Name:</strong> ${student.name}</p>
+          <p><strong>Email:</strong> ${student.email}</p>
+          <!-- Add more details as needed -->
+        `;
+      } catch (error) {
+        console.error('Error fetching student details:', error);
+      }
+    };
+
+    // Call the fetchStudentDetails function when the page loads
+    document.addEventListener('DOMContentLoaded', fetchStudentDetails);
+  </script>
+</body>
+</html>
